@@ -1,0 +1,107 @@
+@startuml
+
+package ui {
+class PublicTimelineViewModel {
+  - _uiState: MutableStateFlow<PublicTimelineUiState>
+  + uiState: StateFlow<PublicTimelineUiState>
+  + onResume()
+  + onRefresh()
+}
+
+class PublicTimelineUiState {
+  + yweetList: List<YweetBindingModel>
+  + isLoading: Boolean
+  + isRefreshing: Boolean
+}
+
+class YweetBindingModel {
+  + id: String
+  + displayName: String
+  + username: String
+  + avatar: String?
+  + content: String
+  + attachmentImageList: List<ImageBindingModel>
+}
+
+class ImageBindingModel {
+  + id: String
+  + type: String
+  + url: String
+  + description: String
+
+}
+
+}
+
+package domain {
+
+class User {
+  + username: Username
+  + displayName: String?
+  + note: String?
+  + avatar: URL?
+  + header: URL?
+  + followingCount: Int
+  + followerCount: Int
+}
+
+class Yweet {
+  + id: YweetId
+  + user: User
+  + content: String
+  + attachmentImageList: List<Image>
+}
+
+class YweetId {
+  + value: String
+}
+
+class Image {
+  + id: ImageId
+  + type: String
+  + url: String
+  + description: String
+}
+
+class ImageId {
+  + value: String
+}
+
+class Username {
+  + value: String
+  + validate()
+}
+
+interface YweetRepository {
+  + findAllPublic(): List<Yweet>
+}
+
+}
+
+package infra {
+class YweetRepositoryImpl {
+}
+
+package apis {
+interface TimelinesApi {
+  + findPublicTimelines(onlyImage: Boolean?, offset: Int?, limit: Int?): Response<List<Yweet>>
+}
+}
+}
+
+YweetRepositoryImpl -- TimelinesApi
+YweetRepositoryImpl --|> YweetRepository
+
+PublicTimelineViewModel -- YweetRepository
+PublicTimelineViewModel -- PublicTimelineUiState
+PublicTimelineUiState -- YweetBindingModel
+YweetBindingModel -- ImageBindingModel
+
+YweetRepository -- Yweet
+Yweet -- YweetId
+Yweet -- User
+Yweet -- Image
+Image -- ImageId
+User -- Username
+
+@enduml

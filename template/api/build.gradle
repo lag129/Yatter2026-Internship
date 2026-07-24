@@ -1,0 +1,25 @@
+buildscript {
+    repositories {
+        maven { url "https://repo1.maven.org/maven2" }
+    }
+    dependencies {
+        classpath libs.kotlin.gradle.plugin
+        classpath libs.ksp.gradle.plugin
+    }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'com.google.devtools.ksp'
+
+dependencies {
+    implementation libs.kotlin.stdlib
+    implementation libs.kotlinx.coroutines.core
+    implementation libs.moshi
+    implementation libs.moshi.kotlin
+    implementation libs.moshi.kotlin.adapters
+    ksp libs.moshi.kotlin.codegen
+    implementation libs.logging.interceptor
+    implementation libs.retrofit
+    implementation libs.converter.moshi
+    implementation libs.retrofit.converter.scalars
+}

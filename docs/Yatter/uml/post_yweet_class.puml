@@ -1,0 +1,113 @@
+@startuml
+
+package domain {
+  package model {
+    class User
+  }
+
+  interface UserRepository {
+    + findLoginUser(): User?
+    + findByUsername(username: Username): User?
+    + create(...)
+    + update(...)
+  }
+
+  interface GetLoginUserService {
+    + execute(): User?
+  }
+
+  interface YweetRepository {
+    + create(content: String, attachmentList: List<File>, imageIds: List<Int>): Yweet
+  }
+
+  interface ImageRepository {
+    + upload(file: File): Int
+  }
+}
+
+package infra {
+  package domain {
+    package repository {
+      class UserRepositoryImpl {
+        - getLoginUsernameService: GetLoginUsernameService
+        - usersApi: UsersApi
+      }
+
+      class YweetRepositoryImpl {
+        - publicTimelinesApi: TimelinesApi,
+        - homeTimelinesApi: TimelinesApi,
+        - yweetsApi: YweetsApi,
+      }
+
+      class ImageRepositoryImpl {
+        - imagesApi: ImagesApi
+      }
+    }
+    package service {
+      class GetLoginUserServiceImpl {
+        - userRepository: UserRepository
+      }
+    }
+  }
+}
+
+package usecase {
+  interface PostYweetUseCase {
+    + execute(content: String, attachmentList: List<File>): PostYweetUseCaseResult
+  }
+
+  class PostYweetUseCaseImpl {
+    - yweetRepository: YweetRepository
+    - imageRepository: ImageRepository
+  }
+
+  class PostYweetUseCaseResult
+}
+
+package ui.post {
+  class PostViewModel {
+    - postYweetUseCase: PostYweetUseCase
+    - getLoginUserService: GetLoginUserServiceImpl
+
+    + uiState: StateFlow<PostUiState>
+    + navigationEvent: Flow<PostNavigationEvent>
+
+    + onCreate()
+    + onChangedYweetText(text: String)
+    + onClickPost(context: Context)
+    + onClickNavIcon()
+  }
+
+  class PostUiState {
+    + bindingModel: PostBindingModel
+    + isLoading: Boolean
+    + canPost: Boolean
+  }
+
+  class PostBindingModel {
+    + avatarUrl: String?
+    + yweetText: String
+    + attachmentImageUris: List<Uri>
+  }
+}
+
+GetLoginUserService -- User
+
+GetLoginUserServiceImpl --|> GetLoginUserService
+UserRepositoryImpl --|> UserRepository
+YweetRepositoryImpl --|> YweetRepository
+ImageRepositoryImpl --|> ImageRepository
+
+GetLoginUserService -- UserRepository
+
+PostYweetUseCaseImpl --|> PostYweetUseCase
+PostYweetUseCase -- PostYweetUseCaseResult
+PostYweetUseCaseImpl -- YweetRepository
+PostYweetUseCaseImpl -- ImageRepository
+
+PostViewModel -- PostUiState
+PostUiState -- PostBindingModel
+
+PostViewModel -- PostYweetUseCase
+PostViewModel -- GetLoginUserService
+@enduml

@@ -1,0 +1,114 @@
+@startuml
+
+package domain {
+  class Password {
+    + value: String
+    + validate(): Boolean
+  }
+
+  class Username {
+    + value: String
+    + validate(): Boolean
+  }
+
+  package service {
+    interface LoginService {
+      + execute(username: Username, password: Password)
+    }
+  }
+}
+
+package infra {
+  package pref {
+    class TokenPreferences {
+      - context: Context
+      - sharedPreferences: SharedPreferences
+      + getAccessToken(): String
+      + putAccessToken(token: String?)
+      + clear()
+    }
+
+    class LoginUserPreferences {
+      - context: Context
+      - sharedPreferences: SharedPreferences
+      + getUsername(): String
+      + putUsername(username: String?)
+      + clear()
+    }
+  }
+
+  package domain {
+    package service {
+      class LoginServiceImpl {
+        - authApi: AuthApi
+        - tokenPreferences: TokenPreferences
+      }
+    }
+  }
+
+  package apis {
+    interface AuthApi {
+      + login(loginRequest: LoginRequest): Response<Login200Response>
+    }
+  }
+}
+
+package usecase {
+  interface LoginUseCase {
+    + execute(username: Username, password: Password): LoginUseCaseResult
+  }
+
+  class LoginUseCaseImpl {
+    - loginService: LoginService
+  }
+
+  class LoginUseCaseResult {
+  }
+}
+
+package ui {
+  package login {
+    class LoginViewModel {
+      - loginUseCase: LoginUseCase
+      + navigationEvent: Flow<LoginNavigationEvent>
+      + uiState: StateFlow<LoginUiState>
+
+      + onChangedUsername(username: String)
+      + onChangedPassword(password: String)
+      + onClickLogin()
+      + onClickRegister()
+    }
+    class LoginUiState {
+      + loginBindingModel: LoginBindingModel
+      + validUsername: Boolean
+      + validPassword: Boolean
+      + isLoading: Boolean
+
+      + isEnableLogin: Boolean
+    }
+    class LoginBindingModel {
+      + username: String
+      + password: String
+    }
+  }
+}
+
+LoginServiceImpl -- TokenPreferences
+LoginServiceImpl -- AuthApi
+LoginServiceImpl --|> LoginService
+
+LoginViewModel -- LoginUseCase
+LoginViewModel -- LoginUiState
+LoginUiState -- LoginBindingModel
+
+LoginUseCaseImpl -- LoginService
+LoginUseCaseImpl --|> LoginUseCase
+
+LoginUseCase -- LoginUseCaseResult
+
+LoginUseCase -- Username
+LoginUseCase -- Password
+
+LoginService -- Username
+LoginService -- Password
+@enduml
