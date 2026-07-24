@@ -24,7 +24,7 @@ android {
 
   buildTypes {
     debug {
-      buildConfigField("String", "API_URL", "\"http://10.0.2.2:8080\"")
+      buildConfigField("String", "API_URL", "\"https://yatter-backend-255491101186.asia-northeast1.run.app/v1\"")
     }
     release {
       isMinifyEnabled = false
@@ -32,7 +32,7 @@ android {
         getDefaultProguardFile("proguard-android-optimize.txt"),
         "proguard-rules.pro",
       )
-      buildConfigField("String", "API_URL", "\"http://10.0.2.2:8080\"")
+      buildConfigField("String", "API_URL", "\"https://yatter-backend-255491101186.asia-northeast1.run.app/v1\"")
     }
   }
   buildFeatures {

@@ -152,7 +152,7 @@ class ApiClient(
 
     @JvmStatic
     val defaultBasePath: String by lazy {
-      System.getProperties().getProperty(BASE_URL_KEY, "http://10.0.2.2:8080/v1")
+      System.getProperties().getProperty(BASE_URL_KEY, "https://yatter-backend-255491101186.asia-northeast1.run.app/v1")
     }
   }
 }
