@@ -17,7 +17,7 @@ BindingModelは、画面を表示する上で必要な情報をまとめた`data
 `Yweet`などのドメインモデルクラスをそのままUI実装に利用することもできますが、アプリの画面では複数のドメインモデルを組み合わせたり、ドメインモデルの値を加工して利用したりすることが多いため、表示する値を保持するだけのBindingModelを用意します。  
 今回のパブリックタイムライン画面開発ではドメインモデルを特に加工することなく表示に利用できますが、プロジェクト全体で設計方針を統一するためにもBindingModelを実装します。  
 
-`YweetJson`ではJsonを表現したデータモデル、`Yweet`ではドメインモデル、`YweetBindingModel`ではuiに表示するためのデータモデルというように、責務によって使用するモデルを変換するようにしています。  
+APIレスポンスの `remote.models.Yweet` ではJsonを表現したデータモデル、ドメインの `Yweet` ではドメインモデル、`YweetBindingModel`ではuiに表示するためのデータモデルというように、責務によって使用するモデルを変換するようにしています。  
 
 タイムライン1行分の見た目に必要な値を`ImageBindingModel`と`YweetBindingModel`に定義していきます。  
 BindingModelは`ui/timeline/bindingmodel`パッケージにファイルを作成していきましょう。  
@@ -83,7 +83,7 @@ object YweetConverter {
       id = yweet.id.value,
       displayName = yweet.user.displayName ?: "",
       username = yweet.user.username.value,
-      avatar = yweet.user.avatar.toString(),
+      avatar = yweet.user.avatar?.toString(),
       content = yweet.content,
       attachmentImageList = ImageConverter.convertToBindingModel(yweet.attachmentImageList)
     )
@@ -659,7 +659,7 @@ LazyColumn(
 ```
 
 ここまで実装するとプレビューにリストが表示されるようになったと思います。  
-現状はプレビューに渡しているリストは1件のためプレビューにも1件しか表示されていませんのでプレビューに渡しているリストの要素数を増やして要素分リスト項目が表示されていることを確認してみてください。  
+現状はプレビューに2件の要素を渡しているため、要素数分のリスト項目が表示されていることを確認してみてください。  
 
 ![PublicTimelineのプレビュー例](../image/2/public_timeline_preview.png)
 
@@ -678,7 +678,7 @@ Column(
 
 ただ、この方法の場合はパフォーマンス面で大きな懸念があります。  
 `Lazy~`を利用しないリスト表示では、リスト全体の描画が一度に全て行われ、その全てがシステム側で保持されます。そのため、リストの要素数が1万件あった場合に1万件全ての描画・保有コストがかかるため動作が著しく重くなります。  
-それに対して`Lazy~`なコンポーザブルを利用した場合には、画面に表示される分のみを描画・保持されます。その状態でスクロールすると新しく表示される要素が描画され、画面外になった要素は破棄されるため保持する内容が必要最小限に抑えられルコとでパフォーマンス面の問題が解決されます。スクロールするたびに発生する新規描画・破棄のパフォーマンス面のコストは気にならないほどなので問題ありません。  
+それに対して`Lazy~`なコンポーザブルを利用した場合には、画面に表示される分のみを描画・保持されます。その状態でスクロールすると新しく表示される要素が描画され、画面外になった要素は破棄されるため保持する内容が必要最小限に抑えられることでパフォーマンス面の問題が解決されます。スクロールするたびに発生する新規描画・破棄のパフォーマンス面のコストは気にならないほどなので問題ありません。  
 主な違いや使い分けとしては以下の表のようになります。
 
 ||Row/Column|LazyRow/LazyColumn|
@@ -764,7 +764,7 @@ Box(
 これにより`PullToRefresh`の実装が完了しました。  
 
 プレビュー画面で実装できているか確認しましょう。  
-プレビューのInterctive Modeを起動してパブリックタイムライン画面をクリックしたまま下に引っ張ると画面上部からローディングインディケータが降りてくるとおもいます。  
+プレビューのInteractive Modeを起動してパブリックタイムライン画面をクリックしたまま下に引っ張ると画面上部からローディングインディケータが降りてくると思います。  
 これで`PullToRefresh`の動作確認まで完了しました。  
 
 ---
@@ -808,7 +808,7 @@ Box(...) {
 `Scaffold`コンポーザブルとは、`TopAppBar`、`BottomAppBar`、`FloatingActionButton`、`Drawer`などの一般的なマテリアルデザインのレイアウトを提供します。  
 `Scaffold`コンポーザブルの適した引数に適したコンポーザブルを渡すことで現在のAndroidアプリにおいて一般的なデザインであるマテリアルデザインに則ったレイアウトをすることが可能です。  
 
-Yatterアプリにおいても、画面上部の`TopAppbar`、画面右下の`FloatingActionButton`を実装する予定のため`Scaffold`を用います。  
+Yatterアプリにおいても、画面上部の`TopAppBar`、画面右下の`FloatingActionButton`を実装する予定のため`Scaffold`を用います。  
 これまで実装していたコンポーザブルのルートである`Box`コンポーザブルを`Scaffold`でラップします。  
 
 ラップした際に`Box`コンポーザブル周辺に赤い波線が引かれていると思います。  
@@ -828,7 +828,7 @@ fun PublicTimelineTemplate(...) {
   }
 }
 ```
-まずは`TopAppbar`を配置して、`タイムライン`という文字列を表示するようにします。  
+まずは`TopAppBar`を配置して、`タイムライン`という文字列を表示するようにします。  
 `Scaffold`の`topBar`引数にラムダでコンポーザブルを配置します。  
 
 ```Kotlin
@@ -878,7 +878,7 @@ fun PublicTimelinePage(
 ```
 
 ViewModelを引数で受け取ったら、ViewModelから状態を抜き出します。  
-今回の設計では画面に表示するための状態をUiStateととしてまとめていますのでまずは次のコードでUiStateを抜き出します。  
+今回の設計では画面に表示するための状態をUiStateとしてまとめていますので、まずは次のコードでUiStateを抜き出します。  
 
 ```Kotlin
 val uiState by publicTimelineViewModel.uiState.collectAsStateWithLifecycle()
@@ -901,34 +901,14 @@ fun PublicTimelinePage(
     yweetList = uiState.yweetList,
     isLoading = uiState.isLoading,
     isRefreshing = uiState.isRefreshing,
-    onRefresh = ,
+    onRefresh = publicTimelineViewModel::onRefresh,
   )
 }
 ```
 
 `onRefresh`はViewModelのメソッドになるため、`UiState`からは取得できません。  
-メソッドを引数として渡すときは関数オブジェクトとして渡す必要があります。  
-
-関数オブジェクトとして渡すには`::`をメソッド名の前に利用します。  
-今回は特に`ViewModel`内のメソッドのため、`publicTimelineViewModel::onRefresh`と記載します。  
-
-```Kotlin
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-
-@Composable
-fun PublicTimelinePage(
-  publicTimelineViewModel: PublicTimelineViewModel = koinViewModel(),
-) {
-  val uiState by publicTimelineViewModel.uiState.collectAsStateWithLifecycle()
-
-  PublicTimelineTemplate(
-    yweetList = uiState.yweetList,
-    isLoading = uiState.isLoading,
-    isRefreshing = uiState.isRefreshing,
-    onRefresh = publicTimelineViewModel::onRefresh,
-  )
-}
-```
+上のコードでは、関数オブジェクトとして `publicTimelineViewModel::onRefresh` を渡しています。  
+`::`をメソッド名の前に付けることで、メソッドを引数として渡せます。
 
 次に、`onResume`のライフサイクルイベントでViewModelの`onResume`を呼び出すようにします。
 
@@ -963,7 +943,7 @@ internal val viewModelModule = module {
 //  viewModel { MainViewModel(get()) }
   viewModel { PublicTimelineViewModel(get()) } // コメントアウトを外す
 //  viewModel { PostViewModel(get(), get()) }
-//  viewModel { RegisterUserViewModel(get()) }
+//  viewModel { RegisterViewModel(get()) }
 //  viewModel { LoginViewModel(get()) }
 }
 ```
@@ -1000,7 +980,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 この2つのメソッドはアプリ全体で利用する色や文字スタイル、UIコンポーネントの形状といったものを管理してアプリ全体を一つのテーマで統一するために用いられるものです。  
 
 この2つを利用しないと、1つのアプリなのに画面によって使われている色や見た目が違っていたり、統一するためにボイラーコードを多く書く必要が出てきます。  
-それらを完結にするために利用されます。  
+それらを簡潔にするために利用されます。  
 
 `YatterTheme`でアプリ全体のテーマ（色や文字スタイル、UIコンポーネントの形状を含みます）を管理するコンポーザブルで、デフォルトの場合`${プロジェクト名}Theme`といった命名でプロジェクト作成時に自動生成されています。  
 `Theme.kt`というファイルでテーマが定義されていますので、アプリ全体の色を変えたい時などに変更してみてください。  

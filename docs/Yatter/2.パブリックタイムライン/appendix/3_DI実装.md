@@ -115,7 +115,7 @@ val viewModelModule = module {
 //  viewModel { MainViewModel(get()) }
 //  viewModel { PublicTimelineViewModel(get()) }
 //  viewModel { PostViewModel(get(), get()) }
-//  viewModel { RegisterUserViewModel(get()) }
+//  viewModel { RegisterViewModel(get()) }
 //  viewModel { LoginViewModel(get()) }
 }
 ```
