@@ -549,8 +549,7 @@ fun LoginPage(
 }
 ```
 
-最後に、動作確認のため一時的に `MainActivity` から `LoginPage` を呼び出します。  
-（次の資料 [3_導線実装](./3_導線実装.md) で `MainApp` に置き換えるため、ここではログイン画面単体の表示確認が目的です。）
+最後に、`MainActivity`から呼び出します。  
 
 ```Kotlin
 override fun onCreate(savedInstanceState: Bundle?) {

@@ -307,7 +307,7 @@ class CheckLoginServiceImplSpec {
   private val subject = CheckLoginServiceImpl(tokenPreferences)
 
   @Test
-  fun getTrueWhenSavedAccessToken() = runTest {
+  fun getTrueWhenSavedUsername() = runTest {
     val accessToken = "accessToken"
 
     coEvery {
@@ -324,7 +324,7 @@ class CheckLoginServiceImplSpec {
   }
 
   @Test
-  fun getFalseWhenEmptyAccessToken() = runTest {
+  fun getFalseWhenUnsavedUsername() = runTest {
     val accessToken = ""
 
     coEvery {

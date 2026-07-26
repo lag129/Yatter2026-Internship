@@ -901,14 +901,34 @@ fun PublicTimelinePage(
     yweetList = uiState.yweetList,
     isLoading = uiState.isLoading,
     isRefreshing = uiState.isRefreshing,
-    onRefresh = publicTimelineViewModel::onRefresh,
+    onRefresh = ,
   )
 }
 ```
 
 `onRefresh`はViewModelのメソッドになるため、`UiState`からは取得できません。  
-上のコードでは、関数オブジェクトとして `publicTimelineViewModel::onRefresh` を渡しています。  
-`::`をメソッド名の前に付けることで、メソッドを引数として渡せます。
+メソッドを引数として渡すときは関数オブジェクトとして渡す必要があります。  
+
+関数オブジェクトとして渡すには`::`をメソッド名の前に利用します。  
+今回は特に`ViewModel`内のメソッドのため、`publicTimelineViewModel::onRefresh`と記載します。  
+
+```Kotlin
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+
+@Composable
+fun PublicTimelinePage(
+  publicTimelineViewModel: PublicTimelineViewModel = koinViewModel(),
+) {
+  val uiState by publicTimelineViewModel.uiState.collectAsStateWithLifecycle()
+
+  PublicTimelineTemplate(
+    yweetList = uiState.yweetList,
+    isLoading = uiState.isLoading,
+    isRefreshing = uiState.isRefreshing,
+    onRefresh = publicTimelineViewModel::onRefresh,
+  )
+}
+```
 
 次に、`onResume`のライフサイクルイベントでViewModelの`onResume`を呼び出すようにします。
 
