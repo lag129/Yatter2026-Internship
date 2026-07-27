@@ -151,7 +151,7 @@ https://developer.android.com/codelabs/basic-android-kotlin-compose-function-typ
 - usernameのバリデーションチェック結果をUiStateに更新
 - 新しいusernameの値をUiStateに更新
 
-usernameのバリデーションは以前実装した`UserName#validate`を利用します。  
+usernameのバリデーションは、template に用意済みの `Username#validate` を利用します。  
 
 ```Kotlin
 fun onChangedUsername(username: String) {
@@ -298,7 +298,7 @@ private fun LoginTemplatePreview() {
 ![](../image/3/login_template_preview.png)
 
 まずは、`LoginTemplate`の引数を決めます。  
-基本的にはパブリックタイムライン画面での引数と同じような流れでを引数を決めます。  
+基本的にはパブリックタイムライン画面での引数と同じような流れで引数を決めます。  
 まずは、画面に表示するための`username`・`password`・`isLoading`の3つです。  
 そして、今回はテキストボックスに入力されたら実行するラムダ式(`(String) -> Unit`)とボタンを押された時に実行するラムダ式(`() -> Unit`)がありますのでそれぞれ名前をつけて引数に追加します。  
 そして、ログインボタンを活性化するための`isEnableLogin`も追加します。  
