@@ -65,6 +65,7 @@ class LoginViewModel(
       when (result) {
         is LoginUseCaseResult.Success -> {
           _navigationEvent.send(LoginNavigationEvent.LoggedIn)
+          Log.d("Yatter", "Login Success")
         }
 
         is LoginUseCaseResult.Failure -> {
