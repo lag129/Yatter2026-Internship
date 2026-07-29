@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material3.Surface
+import com.dmm.bootcamp.yatter.ui.login.LoginPage
 import com.dmm.bootcamp.yatter.ui.theme.YatterTheme
-import com.dmm.bootcamp.yatter.ui.timeline.PublicTimelinePage
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,7 +15,10 @@ class MainActivity : AppCompatActivity() {
     setContent {
       YatterTheme {
         Surface {
-          PublicTimelinePage()
+          LoginPage(
+            onLoggedIn = {},
+            onNavigationRegister = {},
+          )
         }
       }
     }

@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Yatter</string>
+    <string name="login_button_text">ログイン</string>
+    <string name="login_first_time_users_text">はじめてご利用の方は</string>
+    <string name="login_title">ログイン</string>
+    <string name="login_password_title">パスワード</string>
+    <string name="login_password_placeholder">password</string>
+    <string name="login_registration_text">新規ユーザー登録</string>
+    <string name="login_username_title">ユーザ名</string>
+    <string name="login_username_placeholder">username</string>
     <string name="public_timeline_avatar_content_description">アバター画像</string>
 </resources>
