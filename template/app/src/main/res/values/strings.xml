@@ -18,4 +18,12 @@
     <string name="public_timeline_avatar_content_description">アバター画像</string>
     <string name="public_timeline_post_button_text">post</string>
     <string name="public_timeline_text">タイムライン</string>
+    <string name="register_button_title">新規登録</string>
+    <string name="register_login_text_button_title">ログイン</string>
+    <string name="register_login_text_button_description">または</string>
+    <string name="register_password_title">パスワード</string>
+    <string name="register_password_placeholder">password</string>
+    <string name="register_title">新規登録</string>
+    <string name="register_username_title">ユーザ名</string>
+    <string name="register_username_placeholder">username</string>
 </resources>

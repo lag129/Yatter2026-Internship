@@ -18,8 +18,10 @@ import com.dmm.bootcamp.yatter.ui.navigation.DetailKey
 import com.dmm.bootcamp.yatter.ui.navigation.LoginKey
 import com.dmm.bootcamp.yatter.ui.navigation.PostKey
 import com.dmm.bootcamp.yatter.ui.navigation.PublicTimelineKey
+import com.dmm.bootcamp.yatter.ui.navigation.RegisterKey
 import com.dmm.bootcamp.yatter.ui.navigation.YatterNavKey
 import com.dmm.bootcamp.yatter.ui.post.PostPage
+import com.dmm.bootcamp.yatter.ui.register.RegisterPage
 import com.dmm.bootcamp.yatter.ui.timeline.PublicTimelinePage
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -61,7 +63,7 @@ fun MainApp(mainViewModel: MainViewModel = koinViewModel()) {
               backStack.clear()
               backStack.add(PublicTimelineKey)
             },
-            onNavigationRegister = {}
+            onNavigationRegister = { backStack.add(RegisterKey) }
           )
         }
 
@@ -83,6 +85,16 @@ fun MainApp(mainViewModel: MainViewModel = koinViewModel()) {
           DetailPage(
             yweetId = key.yweetId,
             onBack = onBack,
+          )
+        }
+
+        entry<RegisterKey> {
+          RegisterPage(
+            onRegistered = {
+              backStack.clear()
+              backStack.add(LoginKey)
+            },
+            onNavigateToLogin = { onBack() }
           )
         }
       }
