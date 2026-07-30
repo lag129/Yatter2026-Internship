@@ -8,5 +8,10 @@
     <string name="login_registration_text">新規ユーザー登録</string>
     <string name="login_username_title">ユーザ名</string>
     <string name="login_username_placeholder">username</string>
+    <string name="post_avatar_content_description">アバター画像</string>
+    <string name="post_back_icon_button_description">戻る</string>
+    <string name="post_edit_field_placeholder">今何してる？</string>
+    <string name="post_send_button_text">ツイート</string>
+    <string name="post_title">投稿</string>
     <string name="public_timeline_avatar_content_description">アバター画像</string>
 </resources>
