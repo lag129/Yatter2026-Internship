@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.dmm.bootcamp.yatter.R
 import com.dmm.bootcamp.yatter.ui.theme.YatterTheme
 import com.dmm.bootcamp.yatter.ui.timeline.YweetRow
@@ -51,16 +52,18 @@ fun DetailTemplate(
       modifier = Modifier
         .fillMaxSize()
         .padding(paddingValues),
+      contentAlignment = Alignment.Center,
     ) {
       YweetRow(
         yweetBindingModel = yweet,
         onClickYweet = {},
+        modifier = Modifier
+          .fillMaxSize()
+          .padding(8.dp),
       )
 
       if (isLoading) {
-        CircularProgressIndicator(
-          modifier = Modifier.align(Alignment.Center),
-        )
+        CircularProgressIndicator()
       }
     }
   }

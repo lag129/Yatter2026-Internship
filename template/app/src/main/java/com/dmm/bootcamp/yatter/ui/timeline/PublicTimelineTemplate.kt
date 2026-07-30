@@ -85,9 +85,7 @@ fun PublicTimelineTemplate(
       )
 
       if (isLoading) {
-        CircularProgressIndicator(
-//          modifier = Modifier.align(Alignment.Center)
-        )
+        CircularProgressIndicator()
       }
     }
   }
