@@ -14,8 +14,10 @@ import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.dmm.bootcamp.yatter.ui.login.LoginPage
 import com.dmm.bootcamp.yatter.ui.navigation.LoginKey
+import com.dmm.bootcamp.yatter.ui.navigation.PostKey
 import com.dmm.bootcamp.yatter.ui.navigation.PublicTimelineKey
 import com.dmm.bootcamp.yatter.ui.navigation.YatterNavKey
+import com.dmm.bootcamp.yatter.ui.post.PostPage
 import com.dmm.bootcamp.yatter.ui.timeline.PublicTimelinePage
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -62,7 +64,16 @@ fun MainApp(mainViewModel: MainViewModel = koinViewModel()) {
         }
 
         entry<PublicTimelineKey> {
-          PublicTimelinePage()
+          PublicTimelinePage(
+            onNavigateToPost = { backStack.add(PostKey) },
+          )
+        }
+
+        entry<PostKey> {
+          PostPage(
+            onPosted = { onBack() },
+            onBack = onBack
+          )
         }
       }
     )

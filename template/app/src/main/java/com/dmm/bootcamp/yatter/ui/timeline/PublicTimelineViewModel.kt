@@ -4,17 +4,28 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dmm.bootcamp.yatter.domain.repository.YweetRepository
 import com.dmm.bootcamp.yatter.ui.timeline.bindingmodel.converter.YweetConverter
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
+sealed interface PublicTimelineNavigationEvent {
+  data object NavigateToPost : PublicTimelineNavigationEvent
+}
 
 class PublicTimelineViewModel(
   private val yweetRepository: YweetRepository,
 ) : ViewModel() {
-  private val _uiState: MutableStateFlow<PublicTimelineUiState> = MutableStateFlow(PublicTimelineUiState.empty())
+  private val _uiState: MutableStateFlow<PublicTimelineUiState> =
+    MutableStateFlow(PublicTimelineUiState.empty())
   val uiState: StateFlow<PublicTimelineUiState> = _uiState.asStateFlow()
+
+  private val _navigationEvent = Channel<PublicTimelineNavigationEvent>(Channel.BUFFERED)
+  val navigationEvent: Flow<PublicTimelineNavigationEvent> = _navigationEvent.receiveAsFlow()
 
   private suspend fun fetchPublicTimeline() {
     val yweetList = yweetRepository.findAllPublic()
@@ -36,6 +47,12 @@ class PublicTimelineViewModel(
       _uiState.update { it.copy(isLoading = true) }
       fetchPublicTimeline()
       _uiState.update { it.copy(isLoading = false) }
+    }
+  }
+
+  fun onClickPost() {
+    viewModelScope.launch {
+      _navigationEvent.send(PublicTimelineNavigationEvent.NavigateToPost)
     }
   }
 }

@@ -7,11 +7,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -19,8 +23,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.dmm.bootcamp.yatter.R
 import com.dmm.bootcamp.yatter.ui.theme.YatterTheme
 import com.dmm.bootcamp.yatter.ui.timeline.bindingmodel.YweetBindingModel
 
@@ -31,6 +37,7 @@ fun PublicTimelineTemplate(
   isLoading: Boolean,
   isRefreshing: Boolean,
   onRefresh: () -> Unit,
+  onClickPost: () -> Unit,
 ) {
   val pullToRefreshState = rememberPullRefreshState(isRefreshing, onRefresh)
 
@@ -38,10 +45,18 @@ fun PublicTimelineTemplate(
     topBar = {
       TopAppBar(
         title = {
-          Text(text = "タイムライン")
+          Text(text = stringResource(R.string.public_timeline_text))
         },
       )
     },
+    floatingActionButton = {
+      FloatingActionButton(onClick = onClickPost) {
+        Icon(
+          imageVector = Icons.Filled.Add,
+          contentDescription = stringResource(R.string.public_timeline_post_button_text)
+        )
+      }
+    }
   ) { paddingValues ->
     Box(
       modifier = Modifier
@@ -99,6 +114,7 @@ private fun PublicTimelineTemplatePreview() {
         isLoading = true,
         isRefreshing = false,
         onRefresh = {},
+        onClickPost = {},
       )
     }
   }

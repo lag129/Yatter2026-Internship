@@ -14,4 +14,6 @@
     <string name="post_send_button_text">ツイート</string>
     <string name="post_title">投稿</string>
     <string name="public_timeline_avatar_content_description">アバター画像</string>
+    <string name="public_timeline_post_button_text">post</string>
+    <string name="public_timeline_text">タイムライン</string>
 </resources>
