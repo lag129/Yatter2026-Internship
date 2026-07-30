@@ -38,6 +38,7 @@ fun PublicTimelineTemplate(
   isRefreshing: Boolean,
   onRefresh: () -> Unit,
   onClickPost: () -> Unit,
+  onClickYweet: (String) -> Unit
 ) {
   val pullToRefreshState = rememberPullRefreshState(isRefreshing, onRefresh)
 
@@ -70,7 +71,10 @@ fun PublicTimelineTemplate(
         contentPadding = PaddingValues(8.dp),
       ) {
         items(yweetList) { item ->
-          YweetRow(yweetBindingModel = item)
+          YweetRow(
+            yweetBindingModel = item,
+            onClickYweet = onClickYweet,
+          )
         }
       }
 
@@ -81,7 +85,9 @@ fun PublicTimelineTemplate(
       )
 
       if (isLoading) {
-        CircularProgressIndicator()
+        CircularProgressIndicator(
+//          modifier = Modifier.align(Alignment.Center)
+        )
       }
     }
   }
@@ -115,6 +121,7 @@ private fun PublicTimelineTemplatePreview() {
         isRefreshing = false,
         onRefresh = {},
         onClickPost = {},
+        onClickYweet = {},
       )
     }
   }

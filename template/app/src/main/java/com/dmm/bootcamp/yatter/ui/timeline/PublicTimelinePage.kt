@@ -11,6 +11,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun PublicTimelinePage(
   onNavigateToPost: () -> Unit,
+  onNavigateToDetail: (String) -> Unit,
   publicTimelineViewModel: PublicTimelineViewModel = koinViewModel(),
 ) {
   val uiState by publicTimelineViewModel.uiState.collectAsStateWithLifecycle()
@@ -23,6 +24,9 @@ fun PublicTimelinePage(
     publicTimelineViewModel.navigationEvent.collect { event ->
       when (event) {
         PublicTimelineNavigationEvent.NavigateToPost -> onNavigateToPost()
+        PublicTimelineNavigationEvent.NavigateToDetail -> onNavigateToDetail(
+          publicTimelineViewModel.yweetId.value ?: return@collect
+        )
       }
     }
   }
@@ -33,5 +37,6 @@ fun PublicTimelinePage(
     isRefreshing = uiState.isRefreshing,
     onRefresh = publicTimelineViewModel::onRefresh,
     onClickPost = publicTimelineViewModel::onClickPost,
+    onClickYweet = publicTimelineViewModel::onClickYweet
   )
 }

@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 
 sealed interface PublicTimelineNavigationEvent {
   data object NavigateToPost : PublicTimelineNavigationEvent
+  data object NavigateToDetail : PublicTimelineNavigationEvent
 }
 
 class PublicTimelineViewModel(
@@ -26,6 +27,9 @@ class PublicTimelineViewModel(
 
   private val _navigationEvent = Channel<PublicTimelineNavigationEvent>(Channel.BUFFERED)
   val navigationEvent: Flow<PublicTimelineNavigationEvent> = _navigationEvent.receiveAsFlow()
+
+  private val _yweetId = MutableStateFlow<String?>(null)
+  val yweetId: StateFlow<String?> = _yweetId.asStateFlow()
 
   private suspend fun fetchPublicTimeline() {
     val yweetList = yweetRepository.findAllPublic()
@@ -53,6 +57,13 @@ class PublicTimelineViewModel(
   fun onClickPost() {
     viewModelScope.launch {
       _navigationEvent.send(PublicTimelineNavigationEvent.NavigateToPost)
+    }
+  }
+
+  fun onClickYweet(yweetId: String) {
+    viewModelScope.launch {
+      _yweetId.value = yweetId
+      _navigationEvent.send(PublicTimelineNavigationEvent.NavigateToDetail)
     }
   }
 }

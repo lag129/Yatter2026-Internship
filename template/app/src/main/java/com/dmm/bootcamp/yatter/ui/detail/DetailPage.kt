@@ -11,14 +11,14 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun DetailPage(
-  yweetId: YweetId,
+  yweetId: String,
   onBack: () -> Unit,
   detailViewModel: DetailViewModel = koinViewModel(),
 ) {
   val uiState by detailViewModel.uiState.collectAsStateWithLifecycle()
 
   LifecycleEventEffect(event = Lifecycle.Event.ON_RESUME) {
-    detailViewModel.onResume(yweetId)
+    detailViewModel.onResume(YweetId(yweetId))
   }
 
   LaunchedEffect(detailViewModel) {

@@ -1,5 +1,6 @@
 package com.dmm.bootcamp.yatter.ui.timeline
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,6 +38,7 @@ import com.dmm.bootcamp.yatter.ui.timeline.bindingmodel.YweetBindingModel
 @Composable
 fun YweetRow(
   yweetBindingModel: YweetBindingModel,
+  onClickYweet: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val context = LocalContext.current
@@ -49,6 +51,7 @@ fun YweetRow(
 
   Row(
     modifier = modifier
+      .clickable { onClickYweet.invoke(yweetBindingModel.id) }
       .fillMaxWidth()
       .padding(vertical = 4.dp),
     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -122,6 +125,7 @@ private fun YweetRowPreview() {
             ),
           ),
         ),
+        onClickYweet = {},
       )
     }
   }

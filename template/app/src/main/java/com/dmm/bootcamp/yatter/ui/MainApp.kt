@@ -12,6 +12,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import com.dmm.bootcamp.yatter.ui.detail.DetailPage
 import com.dmm.bootcamp.yatter.ui.login.LoginPage
 import com.dmm.bootcamp.yatter.ui.navigation.DetailKey
 import com.dmm.bootcamp.yatter.ui.navigation.LoginKey
@@ -67,6 +68,7 @@ fun MainApp(mainViewModel: MainViewModel = koinViewModel()) {
         entry<PublicTimelineKey> {
           PublicTimelinePage(
             onNavigateToPost = { backStack.add(PostKey) },
+            onNavigateToDetail = { backStack.add(DetailKey(it)) }
           )
         }
 
@@ -77,8 +79,11 @@ fun MainApp(mainViewModel: MainViewModel = koinViewModel()) {
           )
         }
 
-        entry<DetailKey> {
-          TODO()
+        entry<DetailKey> { key ->
+          DetailPage(
+            yweetId = key.yweetId,
+            onBack = onBack,
+          )
         }
       }
     )

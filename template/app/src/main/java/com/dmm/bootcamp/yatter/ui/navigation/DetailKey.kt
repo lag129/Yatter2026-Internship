@@ -3,5 +3,7 @@ package com.dmm.bootcamp.yatter.ui.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object DetailKey : YatterNavKey {
+data class DetailKey(
+  val yweetId: String,
+) : YatterNavKey {
 }
