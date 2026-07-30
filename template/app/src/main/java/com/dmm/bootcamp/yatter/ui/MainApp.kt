@@ -7,6 +7,7 @@ import androidx.compose.runtime.key
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
@@ -45,7 +46,10 @@ fun MainApp(mainViewModel: MainViewModel = koinViewModel()) {
     NavDisplay(
       backStack = backStack,
       onBack = onBack,
-      entryDecorators = listOf(rememberSaveableStateHolderNavEntryDecorator()),
+      entryDecorators = listOf(
+        rememberSaveableStateHolderNavEntryDecorator(),
+        rememberViewModelStoreNavEntryDecorator()
+      ),
       entryProvider = entryProvider {
         entry<LoginKey> {
           LoginPage(

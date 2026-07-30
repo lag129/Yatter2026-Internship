@@ -24,7 +24,11 @@ android {
 
   buildTypes {
     debug {
-      buildConfigField("String", "API_URL", "\"https://yatter-backend-255491101186.asia-northeast1.run.app/v1\"")
+      buildConfigField(
+        "String",
+        "API_URL",
+        "\"https://yatter-backend-255491101186.asia-northeast1.run.app/v1\""
+      )
     }
     release {
       isMinifyEnabled = false
@@ -32,7 +36,11 @@ android {
         getDefaultProguardFile("proguard-android-optimize.txt"),
         "proguard-rules.pro",
       )
-      buildConfigField("String", "API_URL", "\"https://yatter-backend-255491101186.asia-northeast1.run.app/v1\"")
+      buildConfigField(
+        "String",
+        "API_URL",
+        "\"https://yatter-backend-255491101186.asia-northeast1.run.app/v1\""
+      )
     }
   }
   buildFeatures {
@@ -64,6 +72,7 @@ dependencies {
   implementation(libs.androidx.material3)
   implementation(libs.androidx.runtime.livedata)
   implementation(libs.androidx.lifecycle.runtime.compose)
+  implementation(libs.androidx.lifecycle.viewmodel.navigation3)
   implementation(libs.androidx.navigation3.runtime)
   implementation(libs.androidx.navigation3.ui)
   implementation(libs.kotlinx.serialization.json)
