@@ -13,6 +13,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.dmm.bootcamp.yatter.ui.login.LoginPage
+import com.dmm.bootcamp.yatter.ui.navigation.DetailKey
 import com.dmm.bootcamp.yatter.ui.navigation.LoginKey
 import com.dmm.bootcamp.yatter.ui.navigation.PostKey
 import com.dmm.bootcamp.yatter.ui.navigation.PublicTimelineKey
@@ -74,6 +75,10 @@ fun MainApp(mainViewModel: MainViewModel = koinViewModel()) {
             onPosted = { onBack() },
             onBack = onBack
           )
+        }
+
+        entry<DetailKey> {
+          TODO()
         }
       }
     )

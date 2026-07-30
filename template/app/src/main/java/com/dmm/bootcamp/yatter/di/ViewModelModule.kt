@@ -1,6 +1,7 @@
 package com.dmm.bootcamp.yatter.di
 
 import com.dmm.bootcamp.yatter.ui.MainViewModel
+import com.dmm.bootcamp.yatter.ui.detail.DetailViewModel
 import com.dmm.bootcamp.yatter.ui.login.LoginViewModel
 import com.dmm.bootcamp.yatter.ui.post.PostViewModel
 import com.dmm.bootcamp.yatter.ui.timeline.PublicTimelineViewModel
@@ -13,4 +14,5 @@ internal val viewModelModule = module {
   viewModel { PostViewModel(get(), get()) }
   // viewModel { RegisterViewModel(get()) }
   viewModel { LoginViewModel(get()) }
+  viewModel { DetailViewModel(get()) }
 }

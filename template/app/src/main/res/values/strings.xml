@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Yatter</string>
+    <string name="detail_title">投稿の詳細</string>
+    <string name="detail_back_icon_button_description">戻る</string>
     <string name="login_button_text">ログイン</string>
     <string name="login_first_time_users_text">はじめてご利用の方は</string>
     <string name="login_title">ログイン</string>
