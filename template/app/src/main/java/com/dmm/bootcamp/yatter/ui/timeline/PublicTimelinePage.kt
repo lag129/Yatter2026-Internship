@@ -13,7 +13,7 @@ fun PublicTimelinePage(
 ) {
   val uiState by publicTimelineViewModel.uiState.collectAsStateWithLifecycle()
 
-  LifecycleEventEffect(event = Lifecycle.Event.ON_PAUSE) {
+  LifecycleEventEffect(event = Lifecycle.Event.ON_RESUME) {
     publicTimelineViewModel.onResume()
   }
 
