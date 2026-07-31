@@ -19,10 +19,12 @@ import com.dmm.bootcamp.yatter.ui.login.LoginPage
 import com.dmm.bootcamp.yatter.ui.navigation.DetailKey
 import com.dmm.bootcamp.yatter.ui.navigation.LoginKey
 import com.dmm.bootcamp.yatter.ui.navigation.PostKey
+import com.dmm.bootcamp.yatter.ui.navigation.ProfileKey
 import com.dmm.bootcamp.yatter.ui.navigation.PublicTimelineKey
 import com.dmm.bootcamp.yatter.ui.navigation.RegisterKey
 import com.dmm.bootcamp.yatter.ui.navigation.YatterNavKey
 import com.dmm.bootcamp.yatter.ui.post.PostPage
+import com.dmm.bootcamp.yatter.ui.profile.ProfilePage
 import com.dmm.bootcamp.yatter.ui.register.RegisterPage
 import com.dmm.bootcamp.yatter.ui.timeline.PublicTimelinePage
 import org.koin.compose.viewmodel.koinViewModel
@@ -80,7 +82,7 @@ fun MainApp(
               when (it) {
                 BottomBarTab.PUBLIC_TIMELINE -> {}
                 BottomBarTab.PROFILE -> {
-                  backStack.add(PostKey)
+                  backStack.add(ProfileKey)
                 }
               }
             }
@@ -108,6 +110,12 @@ fun MainApp(
               backStack.add(LoginKey)
             },
             onNavigateToLogin = { onBack() }
+          )
+        }
+
+        entry<ProfileKey> {
+          ProfilePage(
+            onNavigateToPost = { backStack.add(PostKey) }
           )
         }
       }
