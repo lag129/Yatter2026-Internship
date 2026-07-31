@@ -1,14 +1,14 @@
 package com.dmm.bootcamp.yatter.ui.detail
 
-import com.dmm.bootcamp.yatter.ui.timeline.bindingmodel.YweetBindingModel
+import com.dmm.bootcamp.yatter.ui.detail.bindingmodel.DetailBindingModel
 
 data class DetailTimelineUiState(
-  val yweet: YweetBindingModel,
+  val yweet: DetailBindingModel,
   val isLoading: Boolean,
 ) {
   companion object {
     fun empty(): DetailTimelineUiState = DetailTimelineUiState(
-      yweet = YweetBindingModel(
+      yweet = DetailBindingModel(
         id = "",
         displayName = "",
         username = "",

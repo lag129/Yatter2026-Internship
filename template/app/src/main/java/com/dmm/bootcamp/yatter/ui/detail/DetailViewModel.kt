@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dmm.bootcamp.yatter.domain.model.YweetId
 import com.dmm.bootcamp.yatter.domain.repository.YweetRepository
-import com.dmm.bootcamp.yatter.ui.timeline.bindingmodel.converter.YweetConverter
+import com.dmm.bootcamp.yatter.ui.detail.bindingmodel.converter.DetailConverter
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,7 +31,7 @@ class DetailViewModel(
   private suspend fun fetchYweetById(yweetId: YweetId) {
     val yweet = yweetRepository.findById(yweetId) ?: return
     _uiState.update {
-      it.copy(yweet = YweetConverter.convertToBindingModel(yweet))
+      it.copy(yweet = DetailConverter.convertToBindingModel(yweet))
     }
   }
 

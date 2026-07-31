@@ -20,14 +20,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dmm.bootcamp.yatter.R
+import com.dmm.bootcamp.yatter.ui.detail.bindingmodel.DetailBindingModel
 import com.dmm.bootcamp.yatter.ui.theme.YatterTheme
-import com.dmm.bootcamp.yatter.ui.timeline.YweetRow
-import com.dmm.bootcamp.yatter.ui.timeline.bindingmodel.YweetBindingModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailTemplate(
-  yweet: YweetBindingModel,
+  yweet: DetailBindingModel,
   isLoading: Boolean,
   onBack: () -> Unit,
 ) {
@@ -54,9 +53,8 @@ fun DetailTemplate(
         .padding(paddingValues),
       contentAlignment = Alignment.Center,
     ) {
-      YweetRow(
+      DetailYweetRow(
         yweetBindingModel = yweet,
-        onClickYweet = {},
         modifier = Modifier
           .fillMaxSize()
           .padding(8.dp),
@@ -75,7 +73,7 @@ private fun DetailTemplatePreview() {
   YatterTheme {
     Surface {
       DetailTemplate(
-        yweet = YweetBindingModel(
+        yweet = DetailBindingModel(
           id = "id1",
           displayName = "display name1",
           username = "username1",
