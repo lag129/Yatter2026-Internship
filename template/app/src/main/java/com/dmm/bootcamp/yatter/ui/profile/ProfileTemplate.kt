@@ -21,8 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,6 +33,8 @@ import androidx.core.content.res.ResourcesCompat
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.dmm.bootcamp.yatter.R
+import com.dmm.bootcamp.yatter.ui.bottombar.BottomBar
+import com.dmm.bootcamp.yatter.ui.bottombar.BottomBarTab
 import com.dmm.bootcamp.yatter.ui.profile.bindingmodel.ProfileBindingModel
 import com.dmm.bootcamp.yatter.ui.theme.YatterTheme
 
@@ -40,6 +45,7 @@ fun ProfileTemplate(
   profileBindingModel: ProfileBindingModel,
   isLoading: Boolean,
   onClickUpdateUser: () -> Unit,
+  onClickBottomBar: (BottomBarTab) -> Unit,
   modifier: Modifier = Modifier
 ) {
   val context = LocalContext.current
@@ -57,7 +63,12 @@ fun ProfileTemplate(
           Text(text = "ユーザ")
         }
       )
-    }
+    },
+    bottomBar = {
+      BottomBar(
+        onClick = onClickBottomBar,
+      )
+    },
   ) { paddingValues ->
     Box(
       modifier = modifier
@@ -80,19 +91,42 @@ fun ProfileTemplate(
             .build(),
           contentDescription = "アバター画像",
           modifier = Modifier
-            .size(64.dp)
+            .size(80.dp)
             .clip(CircleShape)
             .background(Color.White),
         )
 
         Text(
           text = buildAnnotatedString {
-            profileBindingModel.displayName?.let { Text(text = it) }
+            profileBindingModel.displayName?.let {
+              append(it)
+              append(" ")
+            }
             append("＠${profileBindingModel.username}")
           },
           color = Color.DarkGray,
           fontSize = 22.sp,
-          fontWeight = FontWeight.Bold
+          fontWeight = FontWeight.Bold,
+          modifier = Modifier.padding(bottom = 8.dp)
+        )
+
+        Text(
+          text = buildAnnotatedString {
+            if (!profileBindingModel.note.isNullOrEmpty()) {
+              append(profileBindingModel.note)
+            } else {
+              withStyle(
+                style = SpanStyle(
+                  color = Color.DarkGray,
+                  fontStyle = FontStyle.Italic,
+                  fontWeight = FontWeight.Light
+                )
+              ) {
+                append("自己紹介はまだありません")
+              }
+            }
+          },
+          modifier = Modifier.padding(bottom = 8.dp)
         )
 
         Text(
@@ -142,7 +176,8 @@ private fun DetailTemplatePreview() {
           followerCount = 100,
         ),
         isLoading = true,
-        onClickUpdateUser = {}
+        onClickUpdateUser = {},
+        onClickBottomBar = {}
       )
     }
   }

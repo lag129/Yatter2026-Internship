@@ -114,7 +114,16 @@ fun MainApp(mainViewModel: MainViewModel = koinViewModel()) {
         entry<ProfileKey> {
           ProfilePage(
             onNavigateToPost = { backStack.add(PostKey) },
-            onNavigateToUpdateUser = { backStack.add(UpdateUserKey) }
+            onNavigateToUpdateUser = { backStack.add(UpdateUserKey) },
+            onNavigateToBottomBar = {
+              when (it) {
+                BottomBarTab.PUBLIC_TIMELINE -> {
+                  backStack.add(PublicTimelineKey)
+                }
+
+                BottomBarTab.PROFILE -> {}
+              }
+            }
           )
         }
 
