@@ -1,9 +1,9 @@
 package com.dmm.bootcamp.yatter.ui.profile
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dmm.bootcamp.yatter.domain.service.GetLoginUserService
+import com.dmm.bootcamp.yatter.domain.model.Username
+import com.dmm.bootcamp.yatter.domain.repository.UserRepository
 import com.dmm.bootcamp.yatter.ui.profile.bindingmodel.converter.ProfileConverter
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -16,11 +16,10 @@ import kotlinx.coroutines.launch
 
 sealed interface ProfileNavigationEvent {
   data object NavigateToPost : ProfileNavigationEvent
-  data object NavigateToUpdateUser : ProfileNavigationEvent
 }
 
 class ProfileViewModel(
-  private val getLoginUserService: GetLoginUserService
+  private val userRepository: UserRepository
 ) : ViewModel() {
   private val _uiState: MutableStateFlow<ProfileUiState> = MutableStateFlow(ProfileUiState.empty())
   val uiState: StateFlow<ProfileUiState> = _uiState.asStateFlow()
@@ -28,32 +27,18 @@ class ProfileViewModel(
   private val _navigationEvent = Channel<ProfileNavigationEvent>(Channel.BUFFERED)
   val navigationEvent: Flow<ProfileNavigationEvent> = _navigationEvent.receiveAsFlow()
 
-  private suspend fun fetchLoginUser() {
-    val me = getLoginUserService.execute()
-    Log.d("Yatter", me.toString())
-
-    if (me == null) {
-      Log.e("Yatter", "null")
-      return
-    }
-
-    Log.d("Yatter", "Process")
+  private suspend fun fetchUser(username: String) {
+    val user = userRepository.findByUsername(Username(username), disableCache = true) ?: return
     _uiState.update {
-      it.copy(profile = ProfileConverter.convertToBindingModel(me))
+      it.copy(profile = ProfileConverter.convertToBindingModel(user))
     }
   }
 
-  fun onResume() {
+  fun onResume(username: String) {
     viewModelScope.launch {
       _uiState.update { it.copy(isLoading = true) }
-      fetchLoginUser()
+      fetchUser(username)
       _uiState.update { it.copy(isLoading = false) }
-    }
-  }
-
-  fun onClickUpdateUser() {
-    viewModelScope.launch {
-      _navigationEvent.send(ProfileNavigationEvent.NavigateToUpdateUser)
     }
   }
 }

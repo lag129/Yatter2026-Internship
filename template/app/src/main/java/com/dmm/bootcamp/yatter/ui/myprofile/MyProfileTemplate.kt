@@ -1,4 +1,4 @@
-package com.dmm.bootcamp.yatter.ui.profile
+package com.dmm.bootcamp.yatter.ui.myprofile
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -13,6 +13,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,15 +33,19 @@ import androidx.core.content.res.ResourcesCompat
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.dmm.bootcamp.yatter.R
-import com.dmm.bootcamp.yatter.ui.profile.bindingmodel.ProfileBindingModel
+import com.dmm.bootcamp.yatter.ui.bottombar.BottomBar
+import com.dmm.bootcamp.yatter.ui.bottombar.BottomBarTab
+import com.dmm.bootcamp.yatter.ui.myprofile.bindingmodel.MyProfileBindingModel
 import com.dmm.bootcamp.yatter.ui.theme.YatterTheme
 
 @SuppressLint("LocalContextResourcesRead")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileTemplate(
-  profileBindingModel: ProfileBindingModel,
+fun MyProfileTemplate(
+  profileBindingModel: MyProfileBindingModel,
   isLoading: Boolean,
+  onClickUpdateUser: () -> Unit,
+  onClickBottomBar: (BottomBarTab) -> Unit,
   modifier: Modifier = Modifier
 ) {
   val context = LocalContext.current
@@ -58,7 +63,12 @@ fun ProfileTemplate(
           Text(text = "ユーザ")
         }
       )
-    }
+    },
+    bottomBar = {
+      BottomBar(
+        onClick = onClickBottomBar,
+      )
+    },
   ) { paddingValues ->
     Box(
       modifier = modifier
@@ -134,6 +144,12 @@ fun ProfileTemplate(
             append(profileBindingModel.followerCount.toString())
           }
         )
+
+        TextButton(
+          onClick = onClickUpdateUser
+        ) {
+          Text("編集")
+        }
       }
 
       if (isLoading) {
@@ -145,11 +161,11 @@ fun ProfileTemplate(
 
 @Preview(showBackground = true)
 @Composable
-private fun DetailTemplatePreview() {
+private fun MyProfileTemplatePreview() {
   YatterTheme {
     Surface {
-      ProfileTemplate(
-        profileBindingModel = ProfileBindingModel(
+      MyProfileTemplate(
+        profileBindingModel = MyProfileBindingModel(
           id = "",
           username = "",
           displayName = "",
@@ -159,7 +175,9 @@ private fun DetailTemplatePreview() {
           followingCount = 100,
           followerCount = 100,
         ),
-        isLoading = true
+        isLoading = true,
+        onClickUpdateUser = {},
+        onClickBottomBar = {}
       )
     }
   }

@@ -15,8 +15,10 @@ import androidx.navigation3.ui.NavDisplay
 import com.dmm.bootcamp.yatter.ui.bottombar.BottomBarTab
 import com.dmm.bootcamp.yatter.ui.detail.DetailPage
 import com.dmm.bootcamp.yatter.ui.login.LoginPage
+import com.dmm.bootcamp.yatter.ui.myprofile.MyProfilePage
 import com.dmm.bootcamp.yatter.ui.navigation.DetailKey
 import com.dmm.bootcamp.yatter.ui.navigation.LoginKey
+import com.dmm.bootcamp.yatter.ui.navigation.MyProfileKey
 import com.dmm.bootcamp.yatter.ui.navigation.PostKey
 import com.dmm.bootcamp.yatter.ui.navigation.ProfileKey
 import com.dmm.bootcamp.yatter.ui.navigation.PublicTimelineKey
@@ -76,11 +78,12 @@ fun MainApp(mainViewModel: MainViewModel = koinViewModel()) {
           PublicTimelinePage(
             onNavigateToPost = { backStack.add(PostKey) },
             onNavigateToDetail = { backStack.add(DetailKey(it)) },
+            onNavigateToProfile = { backStack.add(ProfileKey(it)) },
             onNavigateToBottomBar = {
               when (it) {
                 BottomBarTab.PUBLIC_TIMELINE -> {}
                 BottomBarTab.PROFILE -> {
-                  backStack.add(ProfileKey)
+                  backStack.add(MyProfileKey)
                 }
               }
             }
@@ -111,8 +114,8 @@ fun MainApp(mainViewModel: MainViewModel = koinViewModel()) {
           )
         }
 
-        entry<ProfileKey> {
-          ProfilePage(
+        entry<MyProfileKey> {
+          MyProfilePage(
             onNavigateToPost = { backStack.add(PostKey) },
             onNavigateToUpdateUser = { backStack.add(UpdateUserKey) },
             onNavigateToBottomBar = {
@@ -136,6 +139,13 @@ fun MainApp(mainViewModel: MainViewModel = koinViewModel()) {
             onSkipped = {
               onBack()
             }
+          )
+        }
+
+        entry<ProfileKey> { key ->
+          ProfilePage(
+            username = key.username,
+            onNavigateToPost = { backStack.add(PostKey) }
           )
         }
       }

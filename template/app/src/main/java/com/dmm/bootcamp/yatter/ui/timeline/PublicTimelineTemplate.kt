@@ -41,6 +41,7 @@ fun PublicTimelineTemplate(
   onRefresh: () -> Unit,
   onClickPost: () -> Unit,
   onClickYweet: (String) -> Unit,
+  onClickProfile: (String) -> Unit,
   onClickBottomBar: (BottomBarTab) -> Unit
 ) {
   val pullToRefreshState = rememberPullRefreshState(isRefreshing, onRefresh)
@@ -82,6 +83,7 @@ fun PublicTimelineTemplate(
           YweetRow(
             yweetBindingModel = item,
             onClickYweet = onClickYweet,
+            onClickProfile = onClickProfile
           )
         }
       }
@@ -128,7 +130,8 @@ private fun PublicTimelineTemplatePreview() {
         onRefresh = {},
         onClickPost = {},
         onClickYweet = {},
-        onClickBottomBar = {}
+        onClickBottomBar = {},
+        onClickProfile = {}
       )
     }
   }

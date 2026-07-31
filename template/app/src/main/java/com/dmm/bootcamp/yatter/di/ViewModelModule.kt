@@ -4,6 +4,7 @@ import com.dmm.bootcamp.yatter.ui.MainViewModel
 import com.dmm.bootcamp.yatter.ui.bottombar.BottomBarViewModel
 import com.dmm.bootcamp.yatter.ui.detail.DetailViewModel
 import com.dmm.bootcamp.yatter.ui.login.LoginViewModel
+import com.dmm.bootcamp.yatter.ui.myprofile.MyProfileViewModel
 import com.dmm.bootcamp.yatter.ui.post.PostViewModel
 import com.dmm.bootcamp.yatter.ui.profile.ProfileViewModel
 import com.dmm.bootcamp.yatter.ui.register.RegisterViewModel
@@ -20,6 +21,7 @@ internal val viewModelModule = module {
   viewModel { LoginViewModel(get()) }
   viewModel { DetailViewModel(get()) }
   viewModel { BottomBarViewModel() }
+  viewModel { MyProfileViewModel(get()) }
   viewModel { ProfileViewModel(get()) }
   viewModel { UpdateUserViewModel(get()) }
 }

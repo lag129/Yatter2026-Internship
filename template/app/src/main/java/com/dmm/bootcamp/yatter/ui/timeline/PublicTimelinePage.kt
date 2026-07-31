@@ -13,6 +13,7 @@ import org.koin.androidx.compose.koinViewModel
 fun PublicTimelinePage(
   onNavigateToPost: () -> Unit,
   onNavigateToDetail: (String) -> Unit,
+  onNavigateToProfile: (String) -> Unit,
   onNavigateToBottomBar: (BottomBarTab) -> Unit,
   publicTimelineViewModel: PublicTimelineViewModel = koinViewModel(),
 ) {
@@ -40,6 +41,7 @@ fun PublicTimelinePage(
     onRefresh = publicTimelineViewModel::onRefresh,
     onClickPost = publicTimelineViewModel::onClickPost,
     onClickYweet = publicTimelineViewModel::onClickYweet,
-    onClickBottomBar = onNavigateToBottomBar
+    onClickBottomBar = onNavigateToBottomBar,
+    onClickProfile = onNavigateToProfile
   )
 }

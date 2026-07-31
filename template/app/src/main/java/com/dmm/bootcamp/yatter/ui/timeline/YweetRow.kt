@@ -47,6 +47,7 @@ import com.dmm.bootcamp.yatter.ui.timeline.bindingmodel.YweetBindingModel
 fun YweetRow(
   yweetBindingModel: YweetBindingModel,
   onClickYweet: (String) -> Unit,
+  onClickProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val context = LocalContext.current
@@ -68,7 +69,8 @@ fun YweetRow(
       modifier = Modifier
         .size(48.dp)
         .clip(CircleShape)
-        .background(Color.White),
+        .background(Color.White)
+        .clickable { onClickProfile.invoke(yweetBindingModel.username) },
       model = ImageRequest.Builder(context)
         .data(yweetBindingModel.avatar)
         .placeholder(placeholder)
@@ -141,6 +143,7 @@ private fun YweetRowPreview() {
           ),
         ),
         onClickYweet = {},
+        onClickProfile = {}
       )
     }
   }
