@@ -6,12 +6,14 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.dmm.bootcamp.yatter.ui.bottombar.BottomBarTab
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun PublicTimelinePage(
   onNavigateToPost: () -> Unit,
   onNavigateToDetail: (String) -> Unit,
+  onNavigateToBottomBar: (BottomBarTab) -> Unit,
   publicTimelineViewModel: PublicTimelineViewModel = koinViewModel(),
 ) {
   val uiState by publicTimelineViewModel.uiState.collectAsStateWithLifecycle()
@@ -37,6 +39,7 @@ fun PublicTimelinePage(
     isRefreshing = uiState.isRefreshing,
     onRefresh = publicTimelineViewModel::onRefresh,
     onClickPost = publicTimelineViewModel::onClickPost,
-    onClickYweet = publicTimelineViewModel::onClickYweet
+    onClickYweet = publicTimelineViewModel::onClickYweet,
+    onClickBottomBar = onNavigateToBottomBar
   )
 }

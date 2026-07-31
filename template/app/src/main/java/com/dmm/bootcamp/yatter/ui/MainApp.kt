@@ -12,6 +12,8 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import com.dmm.bootcamp.yatter.ui.bottombar.BottomBarTab
+import com.dmm.bootcamp.yatter.ui.bottombar.BottomBarViewModel
 import com.dmm.bootcamp.yatter.ui.detail.DetailPage
 import com.dmm.bootcamp.yatter.ui.login.LoginPage
 import com.dmm.bootcamp.yatter.ui.navigation.DetailKey
@@ -26,7 +28,10 @@ import com.dmm.bootcamp.yatter.ui.timeline.PublicTimelinePage
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun MainApp(mainViewModel: MainViewModel = koinViewModel()) {
+fun MainApp(
+  mainViewModel: MainViewModel = koinViewModel(),
+  bottomBarViewModel: BottomBarViewModel = koinViewModel()
+) {
 
   val isLoggedIn by mainViewModel.isLoggedIn.collectAsStateWithLifecycle()
   LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) { mainViewModel.onCreate() }
@@ -70,7 +75,15 @@ fun MainApp(mainViewModel: MainViewModel = koinViewModel()) {
         entry<PublicTimelineKey> {
           PublicTimelinePage(
             onNavigateToPost = { backStack.add(PostKey) },
-            onNavigateToDetail = { backStack.add(DetailKey(it)) }
+            onNavigateToDetail = { backStack.add(DetailKey(it)) },
+            onNavigateToBottomBar = {
+              when (it) {
+                BottomBarTab.PUBLIC_TIMELINE -> {}
+                BottomBarTab.PROFILE -> {
+                  backStack.add(PostKey)
+                }
+              }
+            }
           )
         }
 

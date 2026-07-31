@@ -27,6 +27,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dmm.bootcamp.yatter.R
+import com.dmm.bootcamp.yatter.ui.bottombar.BottomBar
+import com.dmm.bootcamp.yatter.ui.bottombar.BottomBarTab
 import com.dmm.bootcamp.yatter.ui.theme.YatterTheme
 import com.dmm.bootcamp.yatter.ui.timeline.bindingmodel.YweetBindingModel
 
@@ -38,7 +40,8 @@ fun PublicTimelineTemplate(
   isRefreshing: Boolean,
   onRefresh: () -> Unit,
   onClickPost: () -> Unit,
-  onClickYweet: (String) -> Unit
+  onClickYweet: (String) -> Unit,
+  onClickBottomBar: (BottomBarTab) -> Unit
 ) {
   val pullToRefreshState = rememberPullRefreshState(isRefreshing, onRefresh)
 
@@ -48,6 +51,11 @@ fun PublicTimelineTemplate(
         title = {
           Text(text = stringResource(R.string.public_timeline_text))
         },
+      )
+    },
+    bottomBar = {
+      BottomBar(
+        onClick = onClickBottomBar,
       )
     },
     floatingActionButton = {
@@ -120,6 +128,7 @@ private fun PublicTimelineTemplatePreview() {
         onRefresh = {},
         onClickPost = {},
         onClickYweet = {},
+        onClickBottomBar = {}
       )
     }
   }
