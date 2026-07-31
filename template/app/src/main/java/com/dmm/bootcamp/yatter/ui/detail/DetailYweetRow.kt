@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -99,17 +99,17 @@ fun DetailYweetRow(
 
       Text(text = yweetBindingModel.content)
 
-      LazyRow {
+      LazyColumn {
         items(yweetBindingModel.attachmentImageList) { attachmentImage ->
           AsyncImage(
             model = attachmentImage.url,
             contentDescription = attachmentImage.description,
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Fit,
             modifier = Modifier
-              .height(128.dp)
+              .fillMaxWidth()
               .clip(RoundedCornerShape(10.dp))
           )
-          Spacer(modifier = Modifier.width(4.dp))
+          Spacer(modifier = Modifier.height(4.dp))
         }
       }
     }
