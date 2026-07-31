@@ -11,6 +11,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ProfilePage(
   onNavigateToPost: () -> Unit,
+  onNavigateToUpdateUser: () -> Unit,
   profileViewModel: ProfileViewModel = koinViewModel()
 ) {
   val uiState by profileViewModel.uiState.collectAsStateWithLifecycle()
@@ -23,12 +24,14 @@ fun ProfilePage(
     profileViewModel.navigationEvent.collect { event ->
       when (event) {
         ProfileNavigationEvent.NavigateToPost -> onNavigateToPost()
+        ProfileNavigationEvent.NavigateToUpdateUser -> onNavigateToUpdateUser()
       }
     }
   }
 
   ProfileTemplate(
     profileBindingModel = uiState.profile,
-    isLoading = uiState.isLoading
+    isLoading = uiState.isLoading,
+    onClickUpdateUser = profileViewModel::onClickUpdateUser
   )
 }

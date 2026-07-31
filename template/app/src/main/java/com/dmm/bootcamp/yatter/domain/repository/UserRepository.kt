@@ -3,7 +3,7 @@ package com.dmm.bootcamp.yatter.domain.repository
 import com.dmm.bootcamp.yatter.domain.model.Password
 import com.dmm.bootcamp.yatter.domain.model.User
 import com.dmm.bootcamp.yatter.domain.model.Username
-import java.net.URL
+import java.io.File
 
 interface UserRepository {
   suspend fun findLoginUser(disableCache: Boolean): User?
@@ -16,8 +16,8 @@ interface UserRepository {
     me: User,
     newDisplayName: String?,
     newNote: String?,
-    newAvatar: URL?,
-    newHeader: URL?,
+    newAvatar: File?,
+    newHeader: File?,
   ): User
 
   suspend fun followings(): List<User>

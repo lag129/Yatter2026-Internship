@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 
 sealed interface ProfileNavigationEvent {
   data object NavigateToPost : ProfileNavigationEvent
+  data object NavigateToUpdateUser : ProfileNavigationEvent
 }
 
 class ProfileViewModel(
@@ -50,9 +51,9 @@ class ProfileViewModel(
     }
   }
 
-  fun onClickPost() {
+  fun onClickUpdateUser() {
     viewModelScope.launch {
-      _navigationEvent.send(ProfileNavigationEvent.NavigateToPost)
+      _navigationEvent.send(ProfileNavigationEvent.NavigateToUpdateUser)
     }
   }
 }

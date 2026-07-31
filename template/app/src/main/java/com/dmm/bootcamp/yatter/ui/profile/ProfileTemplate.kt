@@ -13,6 +13,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,6 +39,7 @@ import com.dmm.bootcamp.yatter.ui.theme.YatterTheme
 fun ProfileTemplate(
   profileBindingModel: ProfileBindingModel,
   isLoading: Boolean,
+  onClickUpdateUser: () -> Unit,
   modifier: Modifier = Modifier
 ) {
   val context = LocalContext.current
@@ -108,6 +110,12 @@ fun ProfileTemplate(
             append(profileBindingModel.followerCount.toString())
           }
         )
+
+        TextButton(
+          onClick = onClickUpdateUser
+        ) {
+          Text("編集")
+        }
       }
 
       if (isLoading) {
@@ -133,7 +141,8 @@ private fun DetailTemplatePreview() {
           followingCount = 100,
           followerCount = 100,
         ),
-        isLoading = true
+        isLoading = true,
+        onClickUpdateUser = {}
       )
     }
   }

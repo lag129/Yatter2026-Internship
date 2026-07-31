@@ -7,12 +7,15 @@ import com.dmm.bootcamp.yatter.domain.model.Username
 import com.dmm.bootcamp.yatter.domain.repository.UserRepository
 import com.dmm.bootcamp.yatter.domain.service.GetLoginUsernameService
 import com.dmm.bootcamp.yatter.infra.domain.converter.UserConverter
-import java.net.URL
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import remote.apis.UsersApi
 import remote.models.LoginRequest
 import retrofit2.HttpException
+import java.io.File
 
 class UserRepositoryImpl(
   private val usersApi: UsersApi,
@@ -63,12 +66,19 @@ class UserRepositoryImpl(
     me: User,
     newDisplayName: String?,
     newNote: String?,
-    newAvatar: URL?,
-    newHeader: URL?,
+    newAvatar: File?,
+    newHeader: File?,
   ): User = withContext(Dispatchers.IO) {
     val response = usersApi.updateUser(
       displayName = newDisplayName,
       note = newNote,
+      avatar = newAvatar?.let {
+        MultipartBody.Part.createFormData(
+          "avatar",
+          it.name,
+          newAvatar.asRequestBody("image/*".toMediaTypeOrNull())
+        )
+      },
     )
     val body = response.body() ?: throw Exception("Failed to update user: HTTP ${response.code()}")
     val user = UserConverter.convertFromApiModel(body)

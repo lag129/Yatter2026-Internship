@@ -13,7 +13,6 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.dmm.bootcamp.yatter.ui.bottombar.BottomBarTab
-import com.dmm.bootcamp.yatter.ui.bottombar.BottomBarViewModel
 import com.dmm.bootcamp.yatter.ui.detail.DetailPage
 import com.dmm.bootcamp.yatter.ui.login.LoginPage
 import com.dmm.bootcamp.yatter.ui.navigation.DetailKey
@@ -22,18 +21,17 @@ import com.dmm.bootcamp.yatter.ui.navigation.PostKey
 import com.dmm.bootcamp.yatter.ui.navigation.ProfileKey
 import com.dmm.bootcamp.yatter.ui.navigation.PublicTimelineKey
 import com.dmm.bootcamp.yatter.ui.navigation.RegisterKey
+import com.dmm.bootcamp.yatter.ui.navigation.UpdateUserKey
 import com.dmm.bootcamp.yatter.ui.navigation.YatterNavKey
 import com.dmm.bootcamp.yatter.ui.post.PostPage
 import com.dmm.bootcamp.yatter.ui.profile.ProfilePage
 import com.dmm.bootcamp.yatter.ui.register.RegisterPage
 import com.dmm.bootcamp.yatter.ui.timeline.PublicTimelinePage
+import com.dmm.bootcamp.yatter.ui.updateuser.UpdateUserPage
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun MainApp(
-  mainViewModel: MainViewModel = koinViewModel(),
-  bottomBarViewModel: BottomBarViewModel = koinViewModel()
-) {
+fun MainApp(mainViewModel: MainViewModel = koinViewModel()) {
 
   val isLoggedIn by mainViewModel.isLoggedIn.collectAsStateWithLifecycle()
   LifecycleEventEffect(event = Lifecycle.Event.ON_CREATE) { mainViewModel.onCreate() }
@@ -115,7 +113,20 @@ fun MainApp(
 
         entry<ProfileKey> {
           ProfilePage(
-            onNavigateToPost = { backStack.add(PostKey) }
+            onNavigateToPost = { backStack.add(PostKey) },
+            onNavigateToUpdateUser = { backStack.add(UpdateUserKey) }
+          )
+        }
+
+        entry<UpdateUserKey> {
+          UpdateUserPage(
+            onRegistered = {
+              backStack.clear()
+              backStack.add(PublicTimelineKey)
+            },
+            onSkipped = {
+              onBack()
+            }
           )
         }
       }
