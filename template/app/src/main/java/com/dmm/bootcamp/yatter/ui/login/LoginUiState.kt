@@ -1,5 +1,7 @@
 package com.dmm.bootcamp.yatter.ui.login
 
+import com.dmm.bootcamp.yatter.ui.login.bindingmodel.LoginBindingModel
+
 data class LoginUiState(
   val loginBindingModel: LoginBindingModel,
   val isLoading: Boolean,

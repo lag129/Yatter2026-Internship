@@ -1,4 +1,4 @@
-package com.dmm.bootcamp.yatter.ui.login
+package com.dmm.bootcamp.yatter.ui.login.bindingmodel
 
 data class LoginBindingModel(
   val username: String,
