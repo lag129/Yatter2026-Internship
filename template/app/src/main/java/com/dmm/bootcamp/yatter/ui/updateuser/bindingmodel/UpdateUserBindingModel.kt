@@ -6,5 +6,6 @@ import androidx.compose.runtime.Immutable
 @Immutable
 data class UpdateUserBindingModel(
   val displayName: String,
-  val avatarUri: Uri?
+  val avatarUri: Uri?,
+  val note: String
 )

@@ -5,6 +5,7 @@ import java.io.File
 interface UpdateUserUseCase {
   suspend fun execute(
     displayName: String,
-    avatar: File?
+    avatar: File?,
+    note: String
   ): UpdateUserUseCaseResult
 }

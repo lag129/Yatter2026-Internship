@@ -9,7 +9,11 @@ class UpdateUserUseCaseImpl(
   private val userRepository: UserRepository,
 ) : UpdateUserUseCase {
 
-  override suspend fun execute(displayName: String, avatar: File?): UpdateUserUseCaseResult {
+  override suspend fun execute(
+    displayName: String,
+    avatar: File?,
+    note: String
+  ): UpdateUserUseCaseResult {
     val me = userRepository.findLoginUser(true)
       ?: return UpdateUserUseCaseResult.Failure.NotLoggedIn
     userRepository.update(
@@ -17,7 +21,7 @@ class UpdateUserUseCaseImpl(
       newDisplayName = displayName,
       newAvatar = avatar,
       newHeader = null,
-      newNote = null,
+      newNote = note,
     )
 
     return UpdateUserUseCaseResult.Success

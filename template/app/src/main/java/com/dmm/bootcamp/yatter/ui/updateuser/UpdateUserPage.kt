@@ -39,8 +39,9 @@ fun UpdateUserPage(
     bindingModel = uiState.bindingModel,
     isLoading = uiState.isLoading,
     onChangedDisplayName = updateUserViewModel::onChangedDisplayName,
-    onClickRegister = { updateUserViewModel.onClickRegister(context) },
     onClickSelectAvatar = { imagePickerLauncher.launch("image/*") },
+    onChangedNote = updateUserViewModel::onChangedNote,
+    onClickRegister = { updateUserViewModel.onClickRegister(context) },
     onClickSkip = updateUserViewModel::onClickSkip,
     onBack = updateUserViewModel::onClickSkip
   )

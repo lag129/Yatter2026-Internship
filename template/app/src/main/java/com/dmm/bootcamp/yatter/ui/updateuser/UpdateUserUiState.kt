@@ -12,6 +12,7 @@ data class UpdateUserUiState(
         bindingModel = UpdateUserBindingModel(
           displayName = "",
           avatarUri = null,
+          note = ""
         ),
         isLoading = false
       )

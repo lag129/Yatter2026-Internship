@@ -40,6 +40,7 @@ fun UpdateUserTemplate(
   isLoading: Boolean,
   onChangedDisplayName: (String) -> Unit,
   onClickSelectAvatar: () -> Unit,
+  onChangedNote: (String) -> Unit,
   onClickRegister: () -> Unit,
   onClickSkip: () -> Unit,
   onBack: () -> Unit,
@@ -98,6 +99,13 @@ fun UpdateUserTemplate(
           )
         }
 
+        TextField(
+          value = bindingModel.note,
+          onValueChange = onChangedNote,
+          label = { Text("自己紹介") },
+          modifier = Modifier.fillMaxWidth()
+        )
+
         Row(
           modifier = Modifier.fillMaxWidth(),
           horizontalArrangement = Arrangement.End
@@ -134,10 +142,12 @@ private fun UpdateUserTemplatePreview() {
         bindingModel = UpdateUserBindingModel(
           displayName = "displayName",
           avatarUri = null,
+          note = "note"
         ),
         isLoading = true,
         onChangedDisplayName = {},
         onClickSelectAvatar = {},
+        onChangedNote = {},
         onClickRegister = {},
         onClickSkip = {},
         onBack = {}

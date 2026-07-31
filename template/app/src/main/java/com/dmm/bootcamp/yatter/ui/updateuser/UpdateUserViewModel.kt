@@ -57,6 +57,18 @@ class UpdateUserViewModel(
     }
   }
 
+  fun onChangedNote(note: String) {
+    viewModelScope.launch {
+      _uiState.update {
+        it.copy(
+          bindingModel = it.bindingModel.copy(
+            note = note
+          )
+        )
+      }
+    }
+  }
+
   fun onClickRegister(context: Context) {
     viewModelScope.launch {
       _uiState.update { it.copy(isLoading = true) }
@@ -66,7 +78,8 @@ class UpdateUserViewModel(
         uriToFile(context, snapBindingModel.avatarUri)
       }
 
-      val result = updateUserUseCase.execute(snapBindingModel.displayName, avatarFile)
+      val result =
+        updateUserUseCase.execute(snapBindingModel.displayName, avatarFile, snapBindingModel.note)
 
       when (result) {
         UpdateUserUseCaseResult.Success -> {
