@@ -32,6 +32,6 @@ fun DetailPage(
   DetailTemplate(
     yweet = uiState.yweet,
     isLoading = uiState.isLoading,
-    onClickNavIcon = detailViewModel::onClickNavIcon,
+    onBack = detailViewModel::onBack,
   )
 }

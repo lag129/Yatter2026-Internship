@@ -29,7 +29,7 @@ import com.dmm.bootcamp.yatter.ui.timeline.bindingmodel.YweetBindingModel
 fun DetailTemplate(
   yweet: YweetBindingModel,
   isLoading: Boolean,
-  onClickNavIcon: () -> Unit,
+  onBack: () -> Unit,
 ) {
   Scaffold(
     topBar = {
@@ -38,7 +38,7 @@ fun DetailTemplate(
           Text(text = stringResource(R.string.detail_title))
         },
         navigationIcon = {
-          IconButton(onClick = onClickNavIcon) {
+          IconButton(onClick = onBack) {
             Icon(
               imageVector = Icons.AutoMirrored.Filled.ArrowBack,
               contentDescription = stringResource(R.string.detail_back_icon_button_description)
@@ -84,7 +84,7 @@ private fun DetailTemplatePreview() {
           attachmentImageList = listOf(),
         ),
         isLoading = true,
-        onClickNavIcon = {},
+        onBack = {},
       )
     }
   }

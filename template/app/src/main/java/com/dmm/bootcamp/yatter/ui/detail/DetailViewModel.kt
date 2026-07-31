@@ -43,7 +43,7 @@ class DetailViewModel(
     }
   }
 
-  fun onClickNavIcon() {
+  fun onBack() {
     viewModelScope.launch {
       _navigationEvent.send(DetailTimelineNavigationEvent.Back)
     }
