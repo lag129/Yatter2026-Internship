@@ -27,6 +27,7 @@ retrofit = "3.0.0"
 retrofit2KotlinCoroutinesAdapter = "0.9.2"
 truth = "1.4.5"
 openApiGenerator = "7.21.0"
+navigationComposeVersion = "2.9.8"
 
 [libraries]
 androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "lifecycleRuntimeCompose" }
@@ -77,6 +78,7 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationComposeVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

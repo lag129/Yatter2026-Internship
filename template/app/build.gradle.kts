@@ -41,6 +41,7 @@ android {
         "API_URL",
         "\"https://yatter-backend-255491101186.asia-northeast1.run.app/v1\""
       )
+      signingConfig = signingConfigs.getByName("debug")
     }
   }
   buildFeatures {
@@ -62,6 +63,7 @@ dependencies {
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.lifecycle.runtime.ktx)
   implementation(libs.androidx.activity.compose)
+  implementation(libs.androidx.navigation.compose)
   implementation(libs.material)
   implementation(platform(libs.androidx.compose.bom))
   implementation(libs.androidx.ui)

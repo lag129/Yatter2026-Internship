@@ -83,6 +83,7 @@ fun MainApp(mainViewModel: MainViewModel = koinViewModel()) {
               when (it) {
                 BottomBarTab.PUBLIC_TIMELINE -> {}
                 BottomBarTab.PROFILE -> {
+                  backStack.clear()
                   backStack.add(MyProfileKey)
                 }
               }
@@ -121,6 +122,7 @@ fun MainApp(mainViewModel: MainViewModel = koinViewModel()) {
             onNavigateToBottomBar = {
               when (it) {
                 BottomBarTab.PUBLIC_TIMELINE -> {
+                  backStack.clear()
                   backStack.add(PublicTimelineKey)
                 }
 
